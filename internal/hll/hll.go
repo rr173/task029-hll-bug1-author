@@ -128,6 +128,9 @@ func (h *HLL) Estimate() float64 {
 // Merge folds another sketch into this one by taking the per-register maximum.
 // Both sketches must share the same precision.
 func (h *HLL) Merge(other *HLL) error {
+	if other == nil {
+		return errors.New("cannot merge nil sketch")
+	}
 	if h.p != other.p {
 		return ErrPrecisionMismatch
 	}
